@@ -1,0 +1,53 @@
+Varias maneiras de se fazer a mesma coisa:
+codigo dado:
+Arquivo css:
+.invisivel {
+  display: none;
+}
+Arquivo html:
+  <button id="botao-promocao">Promoções</button>
+  <ul class="promocoes">
+    <li>Bermuda de algodão</li>
+    <li>Sandália de borracha</li>
+  </ul>
+  <script="jquery.js">
+//-----------------------------------------------
+Maneira 1:
+$('#botao-promocao').click(function() {
+
+  var promocoes = $('.promocoes');
+  if(promocoes.is(':visible')) {
+
+    promocoes.hide();
+  } else {
+    promocoes.show();
+  }
+
+});
+//-----------------------------------------------
+Maneira 2:
+$('#botao-promocao').click(function() {
+
+  $('.promocoes').toggleClass('invisivel');
+
+});
+//-----------------------------------------------
+Maneira 3:
+$('#botao-promocao').click(function() {
+
+  $('.promocoes').toggle();
+
+});
+//-----------------------------------------------
+Maneira 4:
+$('#botao-promocao').click(function() {
+
+  var promocoes = $('.promocoes');
+  if(promocoes.hasClass('invisivel')) {
+
+    promocoes.removeClass('invisivel');
+  } else {
+    promocoes.addClass('invisivel');
+  }
+
+});
