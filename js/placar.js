@@ -1,8 +1,9 @@
 $("#botao-placar").click(mostraPlacar);
+$("#botao-sync").click(sinconizaPlacar);
 
 function inserePlacar() {
     var corpoTabela = $(".placar").find("tbody");
-    var usuario = "Douglas"
+    var usuario = "Felipe Capelli"
     var numPalavras = $("#contador-palavras").text();
 
     var linha = novaLinha(usuario, numPalavras);
@@ -58,3 +59,49 @@ function mostraPlacar(){
     //$(".placar").toggle();//pode usar o .show() ou .hide(), mas aqui ta .toggle (se tiver mostrando esconde ou vice-versa)
     $(".placar").stop().slideToggle(2000);//pode usar o .slideDown() ou .slideUp(), mas aqui ta .slideToggle (se tiver mostrando esconde ou vice-versa)
 }
+
+function sinconizaPlacar(){
+    var placar = [];
+    var linhas = $("tbody>tr");
+    linhas.each(function(){
+        var usuario = $(this).find("td:nth-child(1)").text();
+        var palavras = $(this).find("td:nth-child(2)").text();
+
+        var score = {
+            usuario: usuario,
+            pontos: palavras
+        };
+
+        placar.push(score);
+    });
+
+    var dados = {
+        placar: placar
+    }
+
+    $.post("http://localhost:3000/placar",dados, function(){
+        console.log("Salvou o placar no servidor");
+    })
+}
+
+function atualizaPlacar(){
+    $.get("http://localhost:3000/placar", function(data){
+        $(data).each(function(){
+            var linha = novaLinha(this.usuario, this.pontos);//no caso o this ta se referindo a quem ta chamando a função each, no caso $(data)
+            linha.find(".botao-remover").click(removeLinha);
+            $("tbody").append(linha);
+        });
+    });
+}
+/*
+//Exemplo de utilização do função each em um array
+var letras = ['a', 'b', 'c'];
+$.each(letras, function(){
+    console.log(this); o this se refere ao array
+});
+
+//se fosse no javaScript seria:
+letras.forEach(function(letra){
+    console.log(letra);
+})
+*/
