@@ -32,3 +32,12 @@
 body{
     overflow: scroll;/*quando o scroll aperece ele não irá modificar os itens da página*/
 }
+
+#erro{
+    color: red;
+    display: none;
+}
+
+#spinner{
+    display: none;
+}
