@@ -3,7 +3,7 @@ $("#botao-sync").click(sinconizaPlacar);
 
 function inserePlacar() {
     var corpoTabela = $(".placar").find("tbody");
-    var usuario = "Felipe Capelli"
+    var usuario = $("#usuarios").val();
     var numPalavras = $("#contador-palavras").text();
 
     var linha = novaLinha(usuario, numPalavras);
@@ -80,8 +80,16 @@ function sinconizaPlacar(){
     }
 
     $.post("http://localhost:3000/placar",dados, function(){
-        console.log("Salvou o placar no servidor");
+        $(".tooltip").tooltipster("open").tooltipster("content", "Sucesso ao sincronizar");
     })
+    .fail(function(){
+        $(".tooltip").tooltipster("open").tooltipster("content", "Falha ao sincronizar");
+    })
+    .always(function(){
+        setTimeout(function(){
+            $(".tooltip").tooltipster("close");
+        },1200);
+    });
 }
 
 function atualizaPlacar(){
